@@ -1,6 +1,5 @@
 # install pip3 for python3
-sudo apt-get install python3-pip
-pip3 install pymodbus
+sudo apt-get install python3-pip | pip3 install pymodbus
 
 # Prevent password for sudo chown
 
