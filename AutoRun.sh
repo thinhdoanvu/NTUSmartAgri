@@ -21,12 +21,15 @@ t=$(tail -1 /home/pi/programs/control.ctrl|cut -f3)
 if [ "$t" == "R" ]; then
 echo -e "Reading... from PLC \n"
 python3 /home/pi/programs/readdata.py
+if [ -e output.dat ]; then
+#checking file if existed
 echo -e "Reading completed!"
 sed 's/\[//g' /home/pi/programs/output.dat | sed 's/\]//g'>/home/pi/programs/tam
 cat /home/pi/programs/data.txt /home/pi/programs/tam >/home/pi/programs/t
 mv /home/pi/programs/t /home/pi/programs/data.txt
 rm /home/pi/programs/tam
 rm /home/pi/programs/output.dat
+fi
 fi
 
 #GHI DU LIEU
