@@ -19,7 +19,7 @@ print(connection)
 if connection == True:
   '''FILE NAME'''
   values=[]
-  with open("/home/pi/programs/config.cfg") as file:
+  with open("/var/www/html/smartagri/config.cfg") as file:
     i = 1
     for line in file:
       val = line
@@ -78,3 +78,4 @@ if connection == True:
   client.write_registers(32729,int(values[26]),unit=2)
   client.write_registers(32730,int(values[27]),unit=2)
   client.write_registers(32731,int(values[28]),unit=2)
+
