@@ -1,3 +1,10 @@
+#!/usr/bin/python3
+'''
+    Chuyen doi dinh dang DOS sang Unnix: ./dos2unix.sh readdata.py
+    Do luc dau bien dich python tren Windows
+    Cap quyen cho phep thuc thi: chmod 755 readdata.py
+    De thuc thi can thuc hien thao tac: ./readdata.py
+'''
 from datetime import datetime
 from pymodbus.client.sync import ModbusSerialClient as ModbusClient
 import logging
