@@ -15,7 +15,7 @@
 ##### static routers=192.168.0.1
 ##### static domain_name_servers=8.8.8.8 208.67.222.222
 
-
+## In the same Network, Port forwarding setting is not necessary
 ### install pip3 for python3
 ###### sudo apt-get install python3-pip 
 ###### pip3 install pymodbus
