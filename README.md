@@ -1,3 +1,21 @@
+### set static IP Network for Raspb
+##### sudo nano /etc/dhcpcd.conf
+
+#### for LAN
+##### interface eth0
+
+##### static ip_address=192.168.0.10/24
+##### static routers=192.168.0.1
+##### static domain_name_servers=8.8.8.8 208.67.222.222
+
+#### for WAN
+##### interface wlan0
+
+##### static ip_address=192.168.0.200/24
+##### static routers=192.168.0.1
+##### static domain_name_servers=8.8.8.8 208.67.222.222
+
+
 ### install pip3 for python3
 ###### sudo apt-get install python3-pip 
 ###### pip3 install pymodbus
