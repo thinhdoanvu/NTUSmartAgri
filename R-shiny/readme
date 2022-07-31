@@ -1,0 +1,5 @@
+Website được viết bằng công cụ R-shiny
+1. Phần webserver được đặt trên máy chủ NTU
+2. Phần giao tiếp với PLC được đặt tại Raspberry Pi4
+3. Code giao tiếp được viết cho PLC Sigma
+4. HMI được viết trên phần cứng Weintek
