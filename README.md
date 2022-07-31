@@ -1,12 +1,29 @@
+### Set timezone, date, time
+#### list time zone
+##### timedatectrl list-timezone
+##### Ket qua la: Asia/Ho_Chi_Minh
+
+#### Set timezone
+##### timedatectrl set-timezone Asia/Ho_Chi_Minh
+
+#### OFF syncs time from Inernet
+##### timedatectrl set-ntp FALSE
+
+#### Set time
+##### timectrl seet-time 17:20:30
+
+#### Setdate and time
+##### sudo date --set="20220731 17:26:30"
+
 ### set static IP Network for Raspb
 ##### sudo nano /etc/dhcpcd.conf
 
 #### for LAN
 ##### interface eth0
 
-##### static ip_address=192.168.0.10/24
-##### static routers=192.168.0.1
-##### static domain_name_servers=8.8.8.8 208.67.222.222
+##### static ip_address=10.9.0.10/28
+##### static routers=10.9.0.1
+##### static domain_name_servers=8.8.8.8 10.9.0.1
 
 #### for WAN
 ##### interface wlan0
