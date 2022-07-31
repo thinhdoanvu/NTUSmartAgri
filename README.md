@@ -1,19 +1,19 @@
 ### Set timezone, date, time
 #### list time zone
-##### timedatectrl list-timezone
-##### Ket qua la: Asia/Ho_Chi_Minh
+###### timedatectrl list-timezone
+###### Ket qua la: Asia/Ho_Chi_Minh
 
 #### Set timezone
-##### timedatectrl set-timezone Asia/Ho_Chi_Minh
+###### timedatectrl set-timezone Asia/Ho_Chi_Minh
 
 #### OFF syncs time from Inernet
-##### timedatectrl set-ntp FALSE
+###### timedatectrl set-ntp FALSE
 
 #### Set time
-##### timectrl seet-time 17:20:30
+###### timectrl seet-time 17:20:30
 
 #### Setdate and time
-##### sudo date --set="20220731 17:26:30"
+###### sudo date --set="20220731 17:26:30"
 
 ### set static IP Network for Raspb
 ##### sudo nano /etc/dhcpcd.conf
