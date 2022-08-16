@@ -99,7 +99,7 @@ tail -1 www/output.dat >> www/data.txt
 echo -e "delete file output.dat"
 end=$(($number - 1))
 echo 2 $end | sed 's/ /,/g' | awk '{print "sed -i "$0"d www/output.dat"}' > del.sh
-echo 2 $end | sed 's/ /,/g' | awk '{print "sed -i "$0"d www/requeset.req"}' >> del.sh
+echo 2 $end | sed 's/ /,/g' | awk '{print "sed -i "$0"d www/request.req"}' >> del.sh
 echo 2 $end | sed 's/ /,/g' | awk '{print "sed -i "$0"d www/control.txt"}' >> del.sh
 bash del.sh
 echo -e "Not enough data output.dat lines"
