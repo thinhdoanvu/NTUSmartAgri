@@ -162,9 +162,9 @@ shinyServer(function(input, output,session) {
     hchart(DAT_24, "line",color="red",hcaes(x=Time))%>%
     
     #highchart() %>%
-    hc_add_series(DAT_24, "line",color="red",hcaes(x=Time,y=Nhietdo_A1/10), marker = list(symbol = 'circle'), name = "Nhiệt độ - KV1", showInLegend = TRUE)  %>%
-    hc_add_series(DAT_24, "line",color="blue",hcaes(x=Time,y=Nhietdo_A2/10), marker = list(symbol = 'square'), name = "Nhiệt độ - KV2", showInLegend = TRUE)  %>%  
-    hc_add_series(DAT_24, "line",color="green",hcaes(x=Time,y=Nhietdo_A3/10), marker = list(symbol = 'triangle'), name = "Nhiệt độ - KV3", showInLegend = TRUE)  %>%   
+    hc_add_series(DAT_24, "line",color="red",hcaes(x=Time,y=Nhietdo_A1), marker = list(symbol = 'circle'), name = "Nhiệt độ - KV1", showInLegend = TRUE)  %>%
+    hc_add_series(DAT_24, "line",color="blue",hcaes(x=Time,y=Nhietdo_A2), marker = list(symbol = 'square'), name = "Nhiệt độ - KV2", showInLegend = TRUE)  %>%  
+    hc_add_series(DAT_24, "line",color="green",hcaes(x=Time,y=Nhietdo_A3), marker = list(symbol = 'triangle'), name = "Nhiệt độ - KV3", showInLegend = TRUE)  %>%   
     hc_exporting(enabled = TRUE) %>% 
     hc_tooltip(crosshairs = TRUE, backgroundColor = "#FCFFC5",shared = TRUE, borderWidth = 0) %>%
     #hc_title(text="Nhiệt độ theo thời gian",align="center") %>%
@@ -184,9 +184,9 @@ shinyServer(function(input, output,session) {
     hchart(DAT_24, "line",color="red",hcaes(x=Time))%>%
     #highchart() %>%
       
-      hc_add_series(DAT_24, "line",color="red",hcaes(x=Time,y=Doam_A1/10), marker = list(symbol = 'circle'), name = "Độ ẩm - KV1", showInLegend = TRUE)  %>%
-      hc_add_series(DAT_24, "line",color="blue",hcaes(x=Time,y=Doam_A2/10), marker = list(symbol = 'square'), name = "Độ ẩm - KV2", showInLegend = TRUE)  %>%  
-      hc_add_series(DAT_24, "line",color="green",hcaes(x=Time,y=Doam_A3/10), marker = list(symbol = 'triangle'), name = "Độ ẩm - KV3", showInLegend = TRUE)  %>%   
+      hc_add_series(DAT_24, "line",color="red",hcaes(x=Time,y=Doam_A1), marker = list(symbol = 'circle'), name = "Độ ẩm - KV1", showInLegend = TRUE)  %>%
+      hc_add_series(DAT_24, "line",color="blue",hcaes(x=Time,y=Doam_A2), marker = list(symbol = 'square'), name = "Độ ẩm - KV2", showInLegend = TRUE)  %>%  
+      hc_add_series(DAT_24, "line",color="green",hcaes(x=Time,y=Doam_A3), marker = list(symbol = 'triangle'), name = "Độ ẩm - KV3", showInLegend = TRUE)  %>%   
       hc_exporting(enabled = TRUE) %>% 
       hc_tooltip(crosshairs = TRUE, backgroundColor = "#FCFFC5",shared = TRUE, borderWidth = 0) %>%
       #hc_title(text="Độ ẩm theo thời gian",align="center") %>%
@@ -227,15 +227,23 @@ shinyServer(function(input, output,session) {
 
   #TAB STATISTIC
   #hien thi data dang bang
-  output$the_data<- DT::renderDataTable({
-    DT::datatable(datasensors, options = list(lengthMenu = c(12, 24, 48), pageLength = 20, scrollX = TRUE))
+  getdata <- reactive({
+    filterdata <- DAT %>% filter(DAT$Date >= input$daterange[1] & DAT$Date <= input$daterange[2])
+    return(filterdata)
   })
+  
+  output$the_data <- DT::renderDataTable({
+    getdata()
+    #DT::datatable(filterdata, options = list(lengthMenu = c(12, 24, 48), order = list(1, 'desc') ,pageLength = 20, scrollX = TRUE))
+  })
+  
+  
   output$downloadData <- downloadHandler(
     filename = function() { 
       paste("data-", Sys.Date(), ".csv", sep="")
     },
     content = function(file) {
-      write.csv(datasensors, file)
+      write.csv(getdata(), file)
     })
   #---------------------------------------------------------------------------#
   #---------------------------SETTINGS----------------------------------------#

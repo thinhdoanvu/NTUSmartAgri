@@ -8,6 +8,8 @@ shinyWidgets::shinyWidgetsGallery()#Shiny switch input
 
 library(highcharter)#highchartOutput
 
+library(tidyverse)#fiter function
+
 library(DBI)#For login database
 
 source("www/global.R")
@@ -23,9 +25,9 @@ header <- dashboardHeader(title = "NTU Smart Agri",#tags$img(src="Pics/header.pn
 
 sidebar <- dashboardSidebar(
     sidebarMenu(
-      menuItem("HOME", tabName = "home", icon = icon("home")),  
-      menuItem("Statistic", tabName = "statictics", icon = icon("dashboard")),
-      menuItem("Settings", icon = icon("life-ring"), tabName = "settings", badgeColor = "green")
+      menuItem("TRANG CHỦ", tabName = "home", icon = icon("home")),  
+      menuItem("Thống kê", tabName = "statictics", icon = icon("dashboard")),
+      menuItem("Thiết lập", icon = icon("life-ring"), tabName = "settings", badgeColor = "green")
     ),
     tags$br(),
     tags$img(src="Pics/sanhan_tim3.jpg",width="100%"),
@@ -134,13 +136,13 @@ body <- dashboardBody(
                     column(width=6,
                       tags$h5("GIÁ TRỊ HIỆN TẠI"),
                       verbatimTextOutput("doam_kv1"),
-                      tags$head(tags$style(HTML("#doam_kv1 {font-size: 14px;}"))),
+                      tags$head(tags$style(HTML("#doam_kv1 {font-size: 12px;}"))),
                       tags$br(),
                       verbatimTextOutput("doam_kv2"),
-                      tags$head(tags$style(HTML("#doam_kv2 {font-size: 14px;}"))),
+                      tags$head(tags$style(HTML("#doam_kv2 {font-size: 12px;}"))),
                       tags$br(),
                       verbatimTextOutput("doam_kv3"),
-                      tags$head(tags$style(HTML("#doam_kv3 {font-size: 14px;}")))
+                      tags$head(tags$style(HTML("#doam_kv3 {font-size: 12px;}")))
                     ),
                    ),#End fluid row
                 ),#End column 4
@@ -197,10 +199,18 @@ body <- dashboardBody(
     #-------------------------STATISTICS----------------------------------------#
     #---------------------------------------------------------------------------#  
     tabItem(tabName = "statictics",
-      downloadButton('downloadData', 'Download'),
-      shinyjs::useShinyjs(),
-      hr(),
-      DT::dataTableOutput("the_data")
+      fluidRow(
+        column(3,downloadButton('downloadData', 'Download'),
+          tags$style('#downloadData {background-color: #6BCB77;}'),
+        ),#End column 3
+        column(9,dateRangeInput("daterange", "Lọc theo ngày:",start = min(DAT$Date),end = max(DAT$Date))
+                                #format = "dd/mm/yyyy",separator = "/")
+        ),#End column 9
+        
+        shinyjs::useShinyjs(),
+        hr(),
+        DT::dataTableOutput("the_data")
+      ),
                   
     ),#End Tab STATISTICS
     #---------------------------------------------------------------------------#
@@ -209,15 +219,15 @@ body <- dashboardBody(
     #---------------------------------------------------------------------------#
     tabItem(tabName = "settings",
       fluidPage(
-        #uiOutput("uiLogin"),
-        #textOutput("pass"),
-        #tags$head(tags$style("#pass{color: red;")),#),    
+        uiOutput("uiLogin"),
+        textOutput("pass"),
+        tags$head(tags$style("#pass{color: red;")),#),    
           
         #hien thi dong login/logout
-        #uiOutput("userPanel"),
+        uiOutput("userPanel"),
         #Hien thi trang login thanh cong
-        #uiOutput("LoginPage")
-        uiOutput("Setup"),#hien thi màn hình thiết lập
+        uiOutput("LoginPage")
+        #uiOutput("Setup"),#hien thi màn hình thiết lập
       )#End fluid page
     )#End Tab Settings
     
