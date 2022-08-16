@@ -84,4 +84,11 @@ if(realtimeDAT$Anhsang_A3 < CONTROL$AS_A1_MIN){
   write.table(CONTROL$AS_A3_MIN,file.path(PWD,"warning.txt"),quote = F,sep = "\t",row.names=FALSE, col.names=FALSE, eol="\n", append =TRUE)
 }
 
+con <- file(file.path(PWD,"warning.txt")) 
+numline <- length(readLines(con))
+if(numline == 1){
+  write.table("Cảm_biến:",file.path(PWD,"warning.txt"),quote = F,sep = "\t",row.names=FALSE, col.names=FALSE, eol="\t", append =TRUE)
+  write.table("Trong_ngưỡng",file.path(PWD,"warning.txt"),quote = F,sep = "\t",row.names=FALSE, col.names=FALSE, eol="\n", append =TRUE)
+}
+
 messageData <- read.table(file.path(PWD,"warning.txt"),header = TRUE)
