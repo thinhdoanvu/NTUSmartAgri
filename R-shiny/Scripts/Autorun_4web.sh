@@ -52,9 +52,8 @@ if [ -e www/control.txt ]; then
 echo -e "file control.txt exist\n"
 else
 echo -e "DATE,TIME,DA_A1_MIN,DA_A1_MAX,DA_A2_MIN,DA_A2_MAX,DA_A3_MIN,DA_A3_MAX,ND_A1_MIN,ND_A1_MAX,ND_A2_MIN,ND_A2_MAX,ND_A3_MIN,ND_A3_MAX,AS_A1_MIN,AS_A1_MAX,AS_A2_MIN,AS_A2_MAX,AS_A3_MIN,AS_A3_MAX,TIME_OFF,TIME_ON,TIME_BN1,TIME_BN2,TIME_BN3,TIME_PS1,TIME_PS2,TIME_PS3,TIME_AS1,TIME_AS2,TIME_AS3" > www/control.txt
-tail -1 www/output.dat | sed 's/,/\t/g' | cut -f1,2,12- | sed 's/\t/,/g' >> www/control.txt
 fi
-
+tail -1 www/output.dat | sed 's/,/\t/g' | cut -f1,2,12- | sed 's/\t/,/g' >> www/control.txt
 if [ -e www/config.cfg ]; then
 tail -1 www/control.txt | sed 's/,/\t/g' | cut -f3- | tr '\t' '\n' > www/config.cfg
 fi
