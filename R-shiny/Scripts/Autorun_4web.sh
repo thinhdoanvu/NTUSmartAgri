@@ -2,9 +2,16 @@
 #export LC_ALL=en_US.UTF-8
 export SHELL=bash
 
+#after reboot: autorun
+#chmod 777 /home/pi/smartagri/*
+#crontab -e
+#Choose: 1 for nano
+#@reboot bash /srv/shiny-server/smartagri/Autorun_4web.sh 2>/srv/shiny-server/smartagri/log
+
 #convert Mac/DOS format file created by PHP chu R thi khong can dung
+#dung lenh cat -e www/request.req de kiem tra ky tu ket thuc dong co phai la $M^ khong? (ky tu ket thuc cua Linux)
 #./dos2unix.sh www/request.req
-PWD=$(pwd)
+cd /srv/shiny-server/smartagri
 
 while true
 do
@@ -32,12 +39,12 @@ t=$(tail -1 www/request.req | cut -f3)
 
 #Sau khi da co file request.req, tien hanh kiem tra dong cuoi cung cua file
 #Neu yeu cau Raspb GUI du lieu len cho Server
-if [ "$t" == "R" ]; then
+#if [ "$t" == "R" ]; then
 # Gui file yeu cau den Raspberry Pi4
-scp www/request.req pi@10.9.0.10:/home/pi/smartagri/www
+#scp www/request.req pi@10.9.0.10:/home/pi/smartagri/www
 #sleep 10 #Cho 10s de PLC gui du lieu cho Raspb
 #scp pi@10.9.0.10:/home/pi/smartagri/www/output.dat www
-fi
+#fi
 
 #Trong truong hop lan dau tien thuc hien chuong trinh, file control.txt chua co
 #control.txt duoc trich loc tu file output.dat sau khi yeu cau doc ket qua tu sensors
@@ -86,18 +93,16 @@ tail -1 www/output.dat >> www/data.txt
 fi
 
 number=$(wc -l www/output.dat | sed 's/ /\t/g' | cut -f1)
-if [ $number -gt 3 ]; then #Do moi 30s doc du lieu 1 lan
+if [ $number -gt 60 ]; then #Do moi 30s doc du lieu 1 lan
 echo -e "copy to data.txt"
 tail -1 www/output.dat >> www/data.txt
 echo -e "delete file output.dat"
 end=$(($number - 1))
-echo 2 $end | sed 's/ /,/g' | awk '{print "sed -i "$0"d www/output.dat"}' > del.sh      
+echo 2 $end | sed 's/ /,/g' | awk '{print "sed -i "$0"d www/output.dat"}' > del.sh
+echo 2 $end | sed 's/ /,/g' | awk '{print "sed -i "$0"d www/requeset.req"}' >> del.sh
+echo 2 $end | sed 's/ /,/g' | awk '{print "sed -i "$0"d www/control.txt"}' >> del.sh
 bash del.sh
-rm www/request.req
-#Du 60 dong data thi xoa file output nay di tu dong thu 2 den dong gan cuoi
-else 
 echo -e "Not enough data output.dat lines"
-
 fi
 
 #waitting for 30 seconds

@@ -7,17 +7,17 @@ export SHELL=bash
 #visudo
 #dthinh ALL=NOPASSWD: /bin/chown
 #for ALL:
-#dthinh ALL+NOPASSWD: ALL
+#dthinh ALL=NOPASSWD: ALL
 
 #after reboot: autorun
-#chmod 777 /home/pi/programs/*
+#chmod 777 /home/pi/smartagri/*
 #crontab -e
 #Choose: 1 for nano
-#@reboot bash /home/pi/programs/AutoRun.sh
+#@reboot bash /home/pi/smartagri/Autorun_4rasp.sh 2>/home/pi/smartagri/log
 
 #Chuong trinh chinh o day!
-#cd /home/dthinh/smartagri
-#sudo chown pi /dev/ttyUSB0
+cd /home/pi/smartagri
+sudo chown pi /dev/ttyUSB0
 
 #convert Mac/DOS format file created by PHP chu R thi khong can dung
 #./dos2unix.sh www/control.ctrl
@@ -40,16 +40,16 @@ echo "file output.dat is exist"
 else
 echo -e "Date,Time,Doam_A1,Doam_A2,Doam_A3,Nhietdo_A1,Nhietdo_A2,Nhietdo_A3,Anhsang_A1,Anhsang_A2,Anhsang_A3,DA_A1_MIN,DA_A1_MAX,DA_A2_MIN,DA_A2_MAX,DA_A3_MIN,DA_A3_MAX,ND_A1_MIN,ND_A1_MAX,ND_A2_MIN,ND_A2_MAX,ND_A3_MIN,ND_A3_MAX,AS_A1_MIN,AS_A1_MAX,AS_A2_MIN,AS_A2_MAX,AS_A3_MIN,AS_A3_MAX,TIME_OFF,TIME_ON,TIME_BN1,TIME_BN2,TIME_BN3,TIME_PS1,TIME_PS2,TIME_PS3,TIME_AS1,TIME_AS2,TIME_AS3" > www/output.dat
 fi
-fi
 
 #Doc du lieu tu cam bien
 echo -e "Reading... from PLC \n"
-#./readdata.py
+./readdata.py
 if [ -e www/output.dat ];then
 echo "file output.dat is exist"
 chmod 777 www/output.dat
 #Copy file output.dat chua gia tri cua cam bien tu Raspb len Server
-#scp www/output.dat dthinh@10.9.0.11:/home/dthinh/smartagri/www
+scp www/output.dat dvt@118.69.121.84:/srv/shiny-server/smartagri/www
+fi
 fi
 ################################################################
 #BUOC 2. Gui cac tham so dieu khien tu Raspb den PLC
@@ -59,7 +59,7 @@ fi
 if [ "$t" == "W" ]; then
 echo -e "Writting... to PLC \n"
 if [ -e  www/config.cfg ]; then
-#./senddata.py
+./senddata.py
 echo -e "Writting completed!"
 #Chen ky tu cuoi cung la R
 date +%d/%m/%Y >d
@@ -89,12 +89,14 @@ tail -1 www/output.dat >> www/data.txt
 fi
 
 number=$(wc -l www/output.dat | sed 's/ /\t/g' | cut -f1)
-if [ $number -gt 3 ]; then #Do moi 30s doc du lieu 1 lan
+if [ $number -gt 60 ]; then #Do moi 30s doc du lieu 1 lan
 echo -e "copy to data.txt"
 tail -1 www/output.dat >> www/data.txt
 echo -e "delete file output.dat"
 end=$(($number - 1))
-echo 2 $end | sed 's/ /,/g' | awk '{print "sed -i "$0"d www/output.dat"}' > del.sh      
+echo 2 $end | sed 's/ /,/g' | awk '{print "sed -i "$0"d www/output.dat"}' > del.sh
+echo 2 $end | sed 's/ /,/g' | awk '{print "sed -i "$0"d www/requeset.req"}' >> del.sh
+echo 2 $end | sed 's/ /,/g' | awk '{print "sed -i "$0"d www/control.txt"}' >> del.sh
 bash del.sh
 fi
 
