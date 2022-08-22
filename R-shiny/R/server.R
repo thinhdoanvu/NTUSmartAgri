@@ -451,12 +451,12 @@ shinyServer(function(input, output,session) {
                column(width = 12,tags$br(),#style = "background-color:#E2DCC8",
                       column(width = 4,
                              tags$style("#timeON {font-size:30px;height:50px;}"),
-                             numericInput(inputId="timeON",label="Giờ Khởi động",value=CONTROL$TIME_ON,min = 0,max = 12,step = 1,width = NULL),
+                             numericInput(inputId="timeON",label="Giờ Khởi động",value=CONTROL$TIME_ON,min = 0,max = 23,step = 1,width = NULL),
                       ),
                       column(width = 1),
                       column(width = 4,
                              tags$style("#timeOFF {font-size:30px;height:50px;}"),
-                             numericInput(inputId="timeOFF",label="Giờ Tạm dừng",value=CONTROL$TIME_OFF,min = 13,max = 23,step = 1,width = NULL),
+                             numericInput(inputId="timeOFF",label="Giờ Tạm dừng",value=CONTROL$TIME_OFF,min = 0,max = 23,step = 1,width = NULL),
                       ),
                ),
              ),#End fluidRow cho auto ON/OFF
@@ -517,6 +517,49 @@ shinyServer(function(input, output,session) {
             gsub(pattern = "FALSE", replace = 0, x = tx))
     writeLines(tx2, con="www/control.txt")
     
+    #Luu vao file config.cfg va gui den -> Raspb -> PLC
+    if(file.exists("www/config.cfg")){
+      file.remove("www/config.cfg")
+    }
+    else{
+      file.create("www/config.cfg")
+    }
+    #ghi noi dung vao file
+    write.table(input$humidity_a1_min*10,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$humidity_a1_max*10,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$humidity_a2_min*10,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$humidity_a2_max*10,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$humidity_a3_min*10,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$humidity_a3_max*10,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$temperature_a1_min*10,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$temperature_a1_max*10,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$temperature_a2_min*10,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$temperature_a2_max*10,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$temperature_a3_min*10,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$temperature_a3_max*10,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$light_a1_min,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$light_a1_max,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$light_a2_min,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$light_a2_max,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$light_a3_min,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$light_a3_max,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$timeOFF,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$timeON,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$TBN.A1,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$TBN.A2,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$TBN.A3,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$TPS.A1,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$TPS.A2,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$TPS.A3,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$TDen.A1,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$TDen.A2,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    write.table(input$TDen.A3,"www/config.cfg",sep ="\n",row.names=FALSE, col.names=FALSE, eol ="\n", append =TRUE)
+    #Thay the noi dung TRUE FALSE bang 1 0
+    tx  <- readLines("www/config.cfg")
+    tx2  <- gsub(pattern = "TRUE", replace = 1,
+                 gsub(pattern = "FALSE", replace = 0, x = tx))
+    writeLines(tx2, con="www/config.cfg")
+    
     #Luu yeu cau Write to PLC vao file request.req, file nay da co do ngay tu khi khoi dong da tao ra file nay roi
     dmy<-format(as.Date(Sys.Date(), '%Y/%m/%d'), '%d/%m/%Y')
     hms<-format(Sys.time(), '%H:%M:%S')
@@ -527,7 +570,7 @@ shinyServer(function(input, output,session) {
     
     shinyjs::refresh()
     
-  })
+  })#End Save button
   
   
 })#End server side
