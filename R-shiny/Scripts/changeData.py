@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 #pip install gspread
 #pip install gspread_formatting
 #File json API nam trong thu muc chua file Python: gsheet.json
@@ -130,10 +131,10 @@ with open('www/dataset.csv') as csv_file:
 print('n=')
 print(n)
 
-i=0
-while i < n:
-    print(f'{date[i]} {time[i]} : {da1[i]} {da2[i]} {da3[i]} : {nd1[i]} {nd2[i]} {nd3[i]} :  {as1[i]} {as2[i]} {as3[i]} : {da1_min} {da1_max} {da2_min} {da2_max} {da3_min} {da3_max} : {nd1_min} {nd1_max} {nd2_min} {nd2_max} {nd3_min} {nd3_max} : {as1_min} {as1_max} {as2_min} {as2_max} {as3_min} {as3_max} : {giomo} {giotat} : {tg_bom1} {tg_bom2} {tg_bom3} : {tg_ps1} {tg_ps2} {tg_ps3} : {tg_as1} {tg_as2} {tg_as3}')
-    i+=1
+#i=0
+#while i < n:
+#    print(f'{date[i]} {time[i]} : {da1[i]} {da2[i]} {da3[i]} : {nd1[i]} {nd2[i]} {nd3[i]} :  {as1[i]} {as2[i]} {as3[i]} : {da1_min} {da1_max} {da2_min} {da2_max} {da3_min} {da3_max} : {nd1_min} {nd1_max} {nd2_min} {nd2_max} {nd3_min} {nd3_max} : {as1_min} {as1_max} {as2_min} {as2_max} {as3_min} {as3_max} : {giomo} {giotat} : {tg_bom1} {tg_bom2} {tg_bom3} : {tg_ps1} {tg_ps2} {tg_ps3} : {tg_as1} {tg_as2} {tg_as3}')
+#    i+=1
 
 # -----------------------------Google Sheet---------------
 gs = gspread.service_account("gsheet.json")
@@ -159,9 +160,9 @@ while i < n:
         print(insertRow)
         j = i+1
         while j < n:
-            print('danh sach cac hang can chen')
+            #print('danh sach cac hang can chen')
             insertRow = [date[j],time[j],da1[j],da2[j],da3[j],nd1[j],nd2[j],nd3[j],as1[j],as2[j],as3[j],da1_min[j],da1_max[j],da2_min[j],da2_max[j],da3_min[j],da3_max[j],nd1_min[j],nd1_max[j],nd2_min[j],nd2_max[j],nd3_min[j],nd3_max[j],as1_min[j],as1_max[j],as2_min[j],as2_max[j],as3_min[j],as3_max[j],giomo[j],giotat[j],tg_bom1[j],tg_bom2[j],tg_bom3[j],tg_ps1[j],tg_ps2[j],tg_ps3[j],tg_as1[j],tg_as2[j],tg_as3[j]]
-            print(insertRow)
+            #print(insertRow)
             length_list +=1
             worksheet.insert_row(insertRow,length_list,value_input_option="USER_ENTERED")
             j += 1
@@ -172,14 +173,14 @@ if(checked == 0):
     print('Insert All')
     j = 0
     while j < n:
-        print('danh sach cac hang can chen')
+        #print('danh sach cac hang can chen')
         insertRow = [date[j],time[j],da1[j],da2[j],da3[j],nd1[j],nd2[j],nd3[j],as1[j],as2[j],as3[j],da1_min[j],da1_max[j],da2_min[j],da2_max[j],da3_min[j],da3_max[j],nd1_min[j],nd1_max[j],nd2_min[j],nd2_max[j],nd3_min[j],nd3_max[j],as1_min[j],as1_max[j],as2_min[j],as2_max[j],as3_min[j],as3_max[j],giomo[j],giotat[j],tg_bom1[j],tg_bom2[j],tg_bom3[j],tg_ps1[j],tg_ps2[j],tg_ps3[j],tg_as1[j],tg_as2[j],tg_as3[j]]
         List_Add.append(insertRow)
-        print(insertRow)
+        #print(insertRow)
         length_list += 1
         # worksheet.insert_row(insertRow,length_list,value_input_option="USER_ENTERED")
-        print('Length List ')
-        print(length_list)
+        #print('Length List ')
+        #print(length_list)
         j += 1
 i=-0
 length_list = 1
@@ -187,60 +188,7 @@ length_list = 1
 sht.values_update(
     'DataSet!A2', 
     params={'value_input_option': "USER_ENTERED"}, 
-    body={'values': List_Add},
-    
+    body={'values': List_Add},   
 )
-# worksheet.insert_row(List_Add,length_list,value_input_option="USER_ENTERED")
-# # temperature[n-1] = float(temperature[n-1])
-
-# worksheet.update_cell(len, 1, date[n-1])
-
-
-# insertRow = [date[n-1],time[n-1],temperature[n-1],humidity[n-1],light[n-1]]
-# worksheet.insert_row(insertRow,len+1,value_input_option="USER_ENTERED")
-
-
-# print()
-
-
-
-# fmt = cellFormat(
-#     numberFormat=numberFormat(type='NUMBER', pattern='####.#')
-#     )
-
-# format_cell_range(worksheet, 'C38:D39', fmt)
-
-
-
-# fmt = cellFormat(numberFormat=numberFormat(type='NUMBER', pattern='####.#'))
-# format_cell_range(worksheet, 'C38:C39', cell_format= NumberFormat(type="NUMBER",pattern='#####.#'))
-# worksheet.update_cells('C38', value_input_option = 'USER_ENTERED')
-
-# worksheet.format("C38",)
-# row_list = list_of_lists[len-1]
-
-# current_cell=row_list[i].replace(',', '') #remove the commas from any numbers
-
-
-# worksheet.format('A38',
-#     {
-#         # "requests":{
-#             "cell":{
-#                 "userEnteredFormat": {
-#             "numberFormat": {
-#                 "type": "NUMBER",
-#                 "pattern": "#,##0",
-#             },
-#             "backgroundColor": {
-#                 "red": 0.0,
-#                 "green": 0.4,
-#                 "blue": 0.4
-#             },
-#             }
-#             }
-#         # }
-#     }
-# )
-
 
 
