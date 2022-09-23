@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 #pip install gspread
 #pip install gspread_formatting
 #File json API nam trong thu muc chua file Python: gsheet.json
