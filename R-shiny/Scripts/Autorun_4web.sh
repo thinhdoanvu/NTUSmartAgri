@@ -91,7 +91,8 @@ echo -e "Date,Time,Doam_A1,Doam_A2,Doam_A3,Nhietdo_A1,Nhietdo_A2,Nhietdo_A3,Anhs
 tail -1 www/output.dat >> www/data.txt
 #Copy len Google Sheet cua cave
 #2 file: changedata.py va gsheet.json cung 1 folder
-tail -1 www/output.dat > www/dataset.csv
+head -1 www/output.dat > www/dataset.csv
+tail -1 www/output.dat >> www/dataset.csv
 fi
 
 number=$(wc -l www/output.dat | sed 's/ /\t/g' | cut -f1)
