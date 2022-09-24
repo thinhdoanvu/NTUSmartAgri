@@ -185,6 +185,9 @@ if(checked == 0):
 i=-0
 length_list = 1
 
+insertRow = [date[0],time[0]]
+worksheet.insert_row(insertRow,2,value_input_option="USER_ENTERED")
+
 sht.values_update(
     'DataSet!A2', 
     params={'value_input_option': "USER_ENTERED"}, 
