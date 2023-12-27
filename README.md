@@ -149,3 +149,14 @@ Neu van con loi:
 ### How To Fix the “Warning: Remote Host Identification Has Changed” Error (on Mac)
 
 rm ~/.ssh/known_hosts
+## Error: The application failed to start.
+## The application exited during initialization.
+### Config port shiny Server
+/etc/shiny-server/shiny-server.conf
+### log file
+/var/log/shiny-server/xxx.log
+#### forexample: 
+ignoring --preserve-environment, it's mutually exclusive with --login
+Error: package ‘jsonlite’ was installed before R 4.0.0: please re-install it
+Execution halted
+#### install.packages("jsonlite")
